@@ -1,0 +1,6 @@
+@Lab13.ExcelReports_HostAddress = http://localhost:5012
+
+GET {{Lab13.ExcelReports_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
