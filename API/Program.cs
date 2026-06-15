@@ -13,8 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? throw new InvalidOperationException(
-        "Configure la cadena de conexión 'ConnectionStrings:DefaultConnection'.");
+                       ?? throw new InvalidOperationException(
+                           "Configure la cadena de conexión 'ConnectionStrings:DefaultConnection'.");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
@@ -28,11 +28,12 @@ builder.Services.AddMediatR(configuration =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// Swagger disponible también en Production
+app.UseSwagger();
+app.UseSwaggerUI();
+
+// Redirigir la raíz hacia Swagger
+app.MapGet("/", () => Results.Redirect("/swagger"));
 
 app.UseHttpsRedirection();
 app.MapReports();
