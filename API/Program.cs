@@ -28,14 +28,14 @@ builder.Services.AddMediatR(configuration =>
 
 var app = builder.Build();
 
-// Swagger disponible también en Production
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// Redirigir la raíz hacia Swagger
-app.MapGet("/", () => Results.Redirect("/swagger"));
+app.MapGet("/", () => Results.Redirect("/swagger"))
+    .ExcludeFromDescription();
 
 app.UseHttpsRedirection();
+
 app.MapReports();
 
 app.Run();
